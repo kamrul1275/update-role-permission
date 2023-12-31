@@ -43,6 +43,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard',[HomeController::class,'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/home',[HomeController::class,'homePage'])->name('home.user');
+
+
 Route::get('/gate/create',[HomeController::class,'CreateGate'])->name('create.gate');
 
 Route::get('/role/request/',[HomeController::class,'roleRequest'])->name('role.request');

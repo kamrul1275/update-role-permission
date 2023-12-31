@@ -103,7 +103,7 @@ class AdminController extends Controller
     function roleApproval(){
 
 
-        $user =  User::where('role', 'user')->where('status', 'active')->with('role')->latest()->get();
+        $user =  User::where('status', 'active')->with('role')->latest()->get();
         $users= json_decode($user, true);
         return view('backend.role.approval',compact('users'));
     }//end method

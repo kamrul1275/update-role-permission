@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,36 +15,32 @@ class HomeController extends Controller
     function Dashboard()
     {
 
+        return view('layouts.dashboard');
 
-        // if (Auth::check()) {
-
-        //     Auth::user();
-            //$roles =  Auth::user()->role;
-
-           // dd($roles);
-
-            // $permissions = [];
-            // foreach ($roles as $role) {
-            //     dd($role->permissions);
-            //     $permissions = array_merge($role->permissions->toArray(), $permissions);
-            // };
+ }//end method
 
 
-            //dd($permissions);  with diya kora jabe
 
+ function homePage()
+ {
 
-       // $user = User::with('role')->latest()->get();
-       // $posts = Post::latest()->get();
+    if (Auth::check()) {
 
-        ///return  $users;
-        //$users = U::latest()->get();
+        Auth::user();
+        $roles =  Auth::user()->role;
 
-        return view('layouts.dashboard');// end metho
+      
 
-    //}
+    $user = User::with('role')->latest()->get();
+    $posts = Post::latest()->get();
+
+    //return  $user;
+    //$users = U::latest()->get();
+
+     return view('pages.home',compact('posts','user'));
+ } //end method
+
  }
-
-
 
 function CreateGate(){
 
@@ -91,7 +88,7 @@ function roleRequestStore(Request $request){
 function rolePages(){
 
     $id = Auth::user()->id;
-    $user =  User::where('id', $id)->where('role', 'user')->where('status', 'active')->with('role')->get();
+    $user =  User::where('id', $id)->where('status', 'active')->with('role')->get();
 
 
     $users= json_decode($user, true);

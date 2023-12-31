@@ -2,14 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Permission;
-use App\Models\User;
 use App\Models\Role;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Auth\Access\Response;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\TextUI\Configuration\Php;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,56 +24,66 @@ class AuthServiceProvider extends ServiceProvider
      * Register any authentication / authorization services.
      */
 
-    public function boot(): void
-    {
+     public function boot(): void
+     {
 
-        $this->registerPolicies();
-
-
+         $this->registerPolicies();
 
 
-        view()->composer('*', function ($view) {
-            if (Auth::guard('web')->check()) {
+
+
+         view()->composer('*', function ($view) {
+             if (Auth::guard('web')->check()) {
+
                 $userinfo = Auth::guard('web')->user();
 
-                //$user = $userinfo->role->name;
 
-               //$permissions = $userinfo->role->permissions->pluck('name')->toArray();
+                if ($userinfo->role !== null) {
+                    $user = $userinfo->role->name;
 
-            }
-        });
-
-
-        Gate::define('create', function (User $user) {
-
-            $role = $user->role;
-            //dd($role && $role->name == 'creator');
-            return $role && ($role->name == $user->role['name']);
-        });
+                    $permissions = $userinfo->role->permissions->pluck('name')->toArray();
+                    $view->with('userPermissions', $permissions);
+                } else {
+                    // Handle the case where 'role' is null for the user
+                    // You can set default permissions or perform other actions as needed
+                    $view->with('userPermissions', []); // Setting an empty array as default permissions
+                }
 
 
-
-        Gate::define('edit', function (User $user) {
-            // Assuming 'role' is a relationship on the User model
-            $role = $user->role;
-            // return  $role;
-            //dd($role && $role->name == 'Admin','Manager);
-            return $role && ($role->name == $user->role['name'] || $role->name == $user->role['name']);
-        });
+             }
+         });
 
 
+         Gate::define('create', function (User $user) {
 
-        Gate::define('view', function (User $user) {
+             $role = $user->role;
+             //dd($role && $role->name == 'creator');
+             return $role && ($role->name == $user->role['name']);
+         });
 
-            // all role
-            $role = $user->role;
-            return $role && ($role->name == $user->role['name'] || $role->name == $user->role['name'] || $role->name == $user->role['name']);
-        });
 
-        Gate::define('delete', function (User $user) {
-            $role = $user->role;
-            //dd($role && $role->name == 'Admin');
-            return $role && ($role->name == $user->role['name']);
-        });
-    }
-}
+
+         Gate::define('edit', function (User $user) {
+             // Assuming 'role' is a relationship on the User model
+             $role = $user->role;
+             // return  $role;
+             //dd($role && $role->name == 'Admin','Manager);
+             return $role && ($role->name == $user->role['name'] || $role->name == $user->role['name']);
+         });
+
+
+
+         Gate::define('view', function (User $user) {
+
+             // all role
+             $role = $user->role;
+             return $role && ($role->name == $user->role['name'] || $role->name == $user->role['name'] || $role->name == $user->role['name']);
+         });
+
+         Gate::define('delete', function (User $user) {
+             $role = $user->role;
+             //dd($role && $role->name == 'Admin');
+             return $role && ($role->name == $user->role['name']);
+         });
+     }
+ }

@@ -8,7 +8,7 @@
 
 
     <ul>
-        <li> <a href="{{ route('dashboard') }}" class="btn btn-primary">Home Page</a></li>
+        <li> <a href="{{ route('home.user') }}" class="btn btn-primary">Home Page</a></li>
         <li> <a href="{{ route('role.request') }}" class="btn btn-warning">Role Request</a></li>
         <li> <a href="{{ route('role.pages') }}" class="btn btn-info">Role</a></li>
 
