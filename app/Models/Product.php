@@ -11,7 +11,14 @@ class Product extends Model
     protected $fillable = [
         'title',
         'price',
+        'user_id',
     ];
+
+
+    public function images()
+    {
+        return $this->hasMany(Product_Image::class);
+    }
 
 
 }

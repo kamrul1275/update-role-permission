@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Models\Role_Permission;
@@ -169,6 +170,11 @@ Route::get('/delete/post/{post}',[PostController::class,'destroy'])->name('delet
 
 
 
+// product part....
+
+
+
+Route::get('/all/product',[ProductController::class,'index'])->name('index.product');
 
 
 
