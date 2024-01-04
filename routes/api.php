@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\api_controller\AdminController;
 use App\Http\Controllers\api_controller\AuthControlller;
+use App\Http\Controllers\api_controller\Permission\PermissionController;
 use App\Http\Controllers\api_controller\product\ProductController;
+use App\Http\Controllers\api_controller\Role\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +39,31 @@ Route::controller(AuthControlller::class)->group(function () {
 
  Route::middleware('auth:sanctum')->group( function () {
     Route::post('logout', [AuthControlller::class, 'logout']);
+
+    // product part..
+
     Route::resource('products',ProductController::class);
+
+
+
+    
+    Route::resource('testing',AdminController::class);
+
+
+
+
 
  });
 
-// product part..
 
  //});
+
+ // product part..
+
+
+ Route::resource('roles',RoleController::class);
+
+ Route::resource('permissions',PermissionController::class);
+
+
+ 
