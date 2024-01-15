@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\api_controller;
+use App\Http\Resources\User as UserResource;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -15,16 +16,14 @@ class AuthControlller extends Controller
 
     public function index()
     {
-        $users = User::all();
 
-        return response()->json([
+        if (Auth::check()) {
 
-            'message'=>'User list',
-            'data'=>$users,
-        ]);
+            $userinfo = Auth::user();
+            return new UserResource($userinfo);
     }
 
-
+    }
 
 
     public function login(Request $request)

@@ -28,7 +28,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // User Authentication
-Route::get('/user', [AuthControlller::class, 'index']);
 
 Route::controller(AuthControlller::class)->group(function () {
     Route::post('register', 'register');
@@ -40,14 +39,12 @@ Route::controller(AuthControlller::class)->group(function () {
  Route::middleware('auth:sanctum')->group( function () {
     Route::post('logout', [AuthControlller::class, 'logout']);
 
-    // product part..
+  
 
-    Route::resource('products',ProductController::class);
-
-
+    Route::get('/user', [AuthControlller::class, 'index']);
 
     
-    Route::resource('testing',AdminController::class);
+    Route::resource('role_permissions',AdminController::class);
 
 
 
@@ -59,6 +56,9 @@ Route::controller(AuthControlller::class)->group(function () {
  //});
 
  // product part..
+  // product part..
+
+Route::resource('products',ProductController::class);
 
 
  Route::resource('roles',RoleController::class);

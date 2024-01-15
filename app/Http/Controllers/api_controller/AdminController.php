@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\api_controller;
+use App\Http\Resources\User as UserResource;
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +16,7 @@ class AdminController extends Controller
     public function index()
     {
 
-//return "working";
+   //return "working";
 
 
         if (Auth::check()) {
@@ -22,7 +24,7 @@ class AdminController extends Controller
             $userinfo = Auth::user();
 
 
-            // return $userinfo;
+             //return $userinfo;
 
 
             if ($userinfo->role !== null) {
@@ -31,13 +33,9 @@ class AdminController extends Controller
                 $permissions = $userinfo->role->permissions->pluck('name')->toArray();
 
 
-                //return  $permissions;
+               // return  $permissions;
 
-         return response()->json([
-
-            'message'=>'All Permission List',
-            'data'=>$permissions,
-                ]);
+               return response()->json($permissions);
 
                 // $view->with('userPermissions', $permissions);
             }
