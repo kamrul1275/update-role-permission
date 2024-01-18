@@ -5,6 +5,7 @@ use App\Http\Controllers\api_controller\AuthControlller;
 use App\Http\Controllers\api_controller\Permission\PermissionController;
 use App\Http\Controllers\api_controller\product\ProductController;
 use App\Http\Controllers\api_controller\Role\RoleController;
+use App\Http\Controllers\api_controller\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,10 +49,14 @@ Route::controller(AuthControlller::class)->group(function () {
 
 
 
+// user 
 
+Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
 
  });
 
+
+ Route::post('/users/{id}/roles/{roleId}', [UserController::class, 'addRole']);
 
  //});
 
