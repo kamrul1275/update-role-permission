@@ -85,13 +85,10 @@ class AdminController extends Controller
 
         $roles = User::find($id);
 
-        //dd($roles);
 
         if ($roles->status == 'inactive') {
 
             $roles->status = 'active';
-
-            //dd($roles);
 
             $roles->save();
 
@@ -123,7 +120,7 @@ class AdminController extends Controller
 
             $roles->save();
 
-            return redirect('/admin/role/pendding')->with('msg', 'penddind Successfully');
+            return redirect('/admin/role/pendding')->with('msg', 'pending Successfully');
         }
     } //end method
 

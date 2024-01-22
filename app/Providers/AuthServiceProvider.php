@@ -36,10 +36,14 @@ class AuthServiceProvider extends ServiceProvider
              if (Auth::guard('web')->check()) {
 
                 $userinfo = Auth::guard('web')->user();
+                //$user = $userinfo->role->name;
 
+               
+//dd($userinfo);
 
                 if ($userinfo->role !== null) {
                     $user = $userinfo->role->name;
+                    //dd($user);
 
                     $permissions = $userinfo->role->permissions->pluck('name')->toArray();
                     $view->with('userPermissions', $permissions);

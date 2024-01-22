@@ -18,7 +18,7 @@ class UserController extends Controller
 
         //return $user;
 
-        $user->role()->attach($roleId);
+        $user?->update(['role_id'=>$roleId]);
 
 
         return response()->json(
