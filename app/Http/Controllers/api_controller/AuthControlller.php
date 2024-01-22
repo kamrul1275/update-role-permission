@@ -25,35 +25,41 @@ class AuthControlller extends Controller
 
     }
 
-
     public function login(Request $request)
     {
-     
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
+    
         $credentials = $request->only('email', 'password');
+        
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            
+            $permissions = [];
+    
+            if ($user->status == 'active' && $user->role !== null) {
+                $permissions = $user->role->permissions->pluck('name')->toArray();
+            }
+    
             return response()->json([
                 'status' => true,
                 'user' => $user,
+                'permissions' => $permissions,
                 'authorization' => [
                     'token' => $user->createToken('ApiToken')->plainTextToken,
                     'type' => 'bearer',
                 ],
             ]);
         }
-
+    
         return response()->json([
-            'status' => true,
+            'status' => false,
             'message' => 'Invalid credentials',
         ], 401);
-
-    } //end method
-
+    }
+    
 
 
 
