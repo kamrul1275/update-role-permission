@@ -40,7 +40,7 @@ class AuthControlller extends Controller
             $permissions = [];
     
             if ($user->status == 'active' && $user->role !== null) {
-                $permissions = $user->role->permissions->pluck('name')->toArray();
+                $permissions = $user->role->permissions->groupBy('pages.page_title');
             }
     
             return response()->json([

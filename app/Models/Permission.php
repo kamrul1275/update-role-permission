@@ -14,5 +14,11 @@ class Permission extends Model
     public function role()
     {
         return $this->belongsToMany(Role::class);
-    }
+    }//end method
+
+
+    public function pages()
+    {
+        return $this->hasOne(Page::class,'id');
+    }//end method
 }

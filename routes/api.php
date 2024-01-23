@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api_controller\AdminController;
 use App\Http\Controllers\api_controller\AuthControlller;
+use App\Http\Controllers\api_controller\PageController;
 use App\Http\Controllers\api_controller\Permission\PermissionController;
 use App\Http\Controllers\api_controller\product\ProductController;
 use App\Http\Controllers\api_controller\Role\RoleController;
@@ -72,3 +73,4 @@ Route::resource('products',ProductController::class);
 
 
  
+Route::get('/',[PageController::class, 'indexPage']);
