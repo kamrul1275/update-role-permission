@@ -7,6 +7,7 @@ use App\Http\Controllers\api_controller\Permission\PermissionController;
 use App\Http\Controllers\api_controller\product\ProductController;
 use App\Http\Controllers\api_controller\Role\RoleController;
 use App\Http\Controllers\api_controller\User\UserController;
+use App\Http\Controllers\api_controller\UserMange\UserController as UserMangeUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,3 +75,8 @@ Route::resource('products',ProductController::class);
 
  
 Route::get('/',[PageController::class, 'indexPage']);
+
+
+// user Manage part
+
+Route::get('/users',[UserMangeUserController::class, 'indexPage']);
