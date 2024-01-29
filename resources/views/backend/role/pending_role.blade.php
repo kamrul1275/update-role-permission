@@ -34,7 +34,7 @@
                         <td scope="row"> {{ $key + 1 }} </td>
                         <td> {{ $data['name'] }}  </td>
 
-                        <td>{{  $data['role']['name'] }}</td>
+                  <td>{{  $data->role->name ??'' }}</td>
 
 
                         <td>

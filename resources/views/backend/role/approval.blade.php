@@ -31,10 +31,10 @@
                         <td scope="row"> {{ $key + 1 }} </td>
                         <td> {{ $data['name'] }}  </td>
 
-                        <td>{{  $data['role']['name'] }}</td>
+                      <td>{{  $data->role->name ?? '' }}</td> 
 
                         <td>
-                            <a href="{{  url('/admin/role/approval/store/'.$data['id']) }}" class="btn btn-success">Pendding</a>
+                            <a href="{{  url('/admin/role/approval/store/'.$data['id']) }}" class="btn btn-danger">Pendding</a>
 
                             <a href="" class="btn btn-danger">delete</a>
 

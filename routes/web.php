@@ -172,10 +172,28 @@ Route::get('/delete/post/{post}',[PostController::class,'destroy'])->name('delet
 
 // product part....
 
-
-
 Route::get('/all/product',[ProductController::class,'index'])->name('index.product');
 
+
+
+
+  ###### User Mnage Part..............
+
+
+  Route::get('/all/user',[AdminController::class,'userIndex'])->name('all.user.manage');
+
+
+  Route::get('/create/user',[AdminController::class,'userCreate'])->name('create.user.manage');
+
+
+  Route::post('/store/user',[AdminController::class,'UserStoreM'])->name('store.usermanage');
+
+
+  Route::get('/edit/user/{id}',[AdminController::class,'userEdit'])->name('edit.usermanage');  
+
+//   Route::get('/update/user/{id}',[AdminController::class,'userUpdate'])->name('update.usermanage');  
+
+  Route::get('/delete/user/{id}',[AdminController::class,'userDelete'])->name('delete.usermanage');
 
 
 });

@@ -4,46 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Role;
 
 class AdminController extends Controller
 {
-    function adminLogin(){
+    function adminLogin()
+    {
         return view('backend.auth.login');
     }
 
 
     public function AdminPostLogin(Request $request)
 
-{
-    $request->validate([
+    {
+        $request->validate([
 
-        'email' => 'required',
-        'password' => 'required',
-    ]);
+            'email' => 'required',
+            'password' => 'required',
+        ]);
 
 
 
-    //dd($request->all());
+        //dd($request->all());
 
-    $request->session()->regenerate();
+        $request->session()->regenerate();
 
-    //dd($request->session()->regenerate());
+        //dd($request->session()->regenerate());
 
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
 
-        return redirect()->intended(RouteServiceProvider::ADMIN_DASHBOARD)->withSuccess('Admin Successfully loggedin');
+            return redirect()->intended(RouteServiceProvider::ADMIN_DASHBOARD)->withSuccess('Admin Successfully loggedin');
+        }
+
+        return redirect("/admin/login")->withSuccess('Oppes! You have entered invalid credentials');
     }
 
-    return redirect("/admin/login")->withSuccess('Oppes! You have entered invalid credentials');
-}
 
 
-
-// end admin login
+    // end admin login
 
 
 
@@ -66,16 +70,17 @@ class AdminController extends Controller
 
 
 
-    function rolePending(){
+    function rolePending()
+    {
 
 
-        $user =  User::where('role','user')->where('status','inactive')->with('role')->get();
-//return  $users ;
-       $users= json_decode($user, true);
+        $users =  User::where('play', 'user')->where('status', 'inactive')->with('role')->get();
+//return  $user ;
+       // $users = json_decode($user, true);
 
-       //return  $users ;
-        return view('backend.role.pending_role',compact('users'));
-    }//end method
+        //return  $users ;
+        return view('backend.role.pending_role', compact('users'));
+    } //end method
 
 
 
@@ -97,13 +102,16 @@ class AdminController extends Controller
     } //end method
 
 
-    function roleApproval(){
+    function roleApproval()
+    {
 
 
-        $user =  User::where('status', 'active')->with('role')->latest()->get();
-        $users= json_decode($user, true);
-        return view('backend.role.approval',compact('users'));
-    }//end method
+        $users =  User::where('status', 'active')->with('role')->latest()->get();
+
+        //return   $user;
+        // $users = json_decode($user, true);
+        return view('backend.role.approval', compact('users'));
+    } //end method
 
     function approvePendding($id)
     {
@@ -123,5 +131,103 @@ class AdminController extends Controller
             return redirect('/admin/role/pendding')->with('msg', 'pending Successfully');
         }
     } //end method
+
+
+
+
+    ###### User Mnage Part..............
+
+    public function userIndex()
+    {
+        $users = User::latest()->get();
+
+        return view('backend.user_manage.all_user',compact('users'));
+
+       
+    } // end method
+
+
+
+    public function userCreate(){
+
+        $roles = Role::get();
+    return view('backend.user_manage.create_user',compact('roles'));
+
+   }//end method
+
+
+
+
+function UserStoreM(Request $request){
+// return $request->all();
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            'status'=>'active',
+
+        ]);
+
+
+        return redirect('/all/user')->with('User Create Succesfully');
+
+}
+
+
+
+
+
+
+
+    public function userEdit($id)
+    {
+
+        $roles = Role::get();
+        $users = User::find($id);
+
+        return view('backend.user_manage.edit_User',compact('roles'));
+
+       
+    } // end method
+
+
+
+    public function userUpdate(Request $request)
+    {
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required'],
+        ]);
+
+        $user = User::updated([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+
+        ]);
+
+        //dd($user);
+        return redirect('/alluser')->with('User Update Succesfully');
+    }//end method
+
+
+
+    public function userDelete($id)
+    {
+        $users = User::find($id);
+        $users->delete();
+
+        return redirect()->back()->with('msg','User delete Succesfully');
+
+       
+    } // end method
+
+
 
 }
