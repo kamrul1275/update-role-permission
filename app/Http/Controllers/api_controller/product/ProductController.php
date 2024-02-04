@@ -27,17 +27,22 @@ class ProductController extends Controller
 
             'message'=>'Product list',
             'data'=>$products,
-            //'dataImage'=>$product_images,
+           
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
+
     public function create()
     {
         //
     }
+
+
+
 
     public function store(StoreProductRequest $request)
     {
@@ -58,15 +63,6 @@ class ProductController extends Controller
             ]);
 
 
-
-
-            // $image = $request->file('image');
-            // $make_name = hexdec(uniqid()).'.'.$request->file('image')->getClientOriginalExtension();
-            // Image::make($request->file('image'))->resize(800,800)->save('upload/product/'.$make_name);
-            // $save_url = 'upload/product/'.$make_name;
-
-
-
                 $name_gen = hexdec(uniqid()) . '.' . $request->file('image')->getClientOriginalExtension();
                 $request->file('image')->move(public_path('upload/product/'), $name_gen);
                 $save_url = 'upload/product/' . $name_gen;
@@ -79,8 +75,6 @@ class ProductController extends Controller
             // }
 
 
-
-            //return $productImage;
 
             DB::commit();
 
@@ -96,20 +90,22 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(Product $product)
-    // {
-    //     $product = Product::find($product);
 
-    //     return $product;
-    //     return response()->json([
-    //     "success" => true,
-    //     "message" => "Edit Product List",
-    //     "data" => $product
-    //     ]);
-    // }
+
+    public function editProduct(Product $product,$id)
+    {
+        //return "working";
+        $product = Product::find($id);
+
+        //return $product;
+        return response()->json([
+            'message'=>'Product list',
+            'data'=>$product,
+        ]);
+    }
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -126,6 +122,8 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+
     public function destroy(Product $product)
     {
         $product->delete();

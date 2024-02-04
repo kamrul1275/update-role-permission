@@ -13,51 +13,142 @@ class UserController extends Controller
 {
 
 
-//     public function indexPage()
-//     {
-//         $users = User::get();
+    public function indexPage()
+    {
+        $users = User::get();
 
-//         return response()->json([
+        return response()->json([
 
-//             'message'=>'All User',
-//             'data'=>$users,
+            'message'=>'All User',
+            'data'=>$users,
     
-//         ]);
-//     }// end method
+        ]);
+    }// end method
 
 
 
-//     public function userStore(Request $request)
-//     {
+    public function createPage(Request $request)
 
-//         $request->validate([
-//             'name' => ['required', 'string', 'max:255'],
-//             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-//             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-//             'role'=>['required'],
-//         ]);
+    {
 
 
-//         $user = User::create([
-//             'name' => $request->name,
-//             'email' => $request->email,
-//             'password' => Hash::make($request->password),
-//              'role_id' => $request->role_id,
+// return "working";
 
-//         ]);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required'],
+           
+        ]);
+
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+           
+        ]);
 
     
-// //dd($user);
+//dd($user);
 
 
-// return response()->json([
+        return response()->json([
 
-//     'message'=>'User Create Succesfully',
-//     'data'=>$user,
-//     //'dataImage'=>$product_images,
-// ]);
-//     }
+            'message'=>'User Create Succesfully',
+            'data'=>$user,
+            //'dataImage'=>$product_images,
+        ]);
+            }
+//end method
 
+
+
+
+public function editPage($id)
+{
+
+   // return "working";
+    $users = User::find($id);
+
+    return response()->json([
+
+        'message'=>'Edit User',
+        'data'=>$users,
+
+    ]);
+}// end method
+
+
+
+public function updatePage(Request $request,$id)
+
+    {
+
+
+ //return "working";
+
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required'],
+           
+        ]);
+
+        $user = User::find($id);
+
+        if( $user){
+
+            $user->updated([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+               
+            ]);
+    
+        
+    //dd($user);
+    //$users = User::find($id);
+    
+
+            return response()->json([
+                'status'=>200,
+                'message'=>'User Update Succesfully',
+                'data'=>$user,
+                //'dataImage'=>$product_images,
+            ],200);
+
+        }else{
+
+            return response()->json([
+                'status'=>404,
+                'message'=>'no found user',
+                'data'=>$user,
+                //'dataImage'=>$product_images,
+            ]);
+        }
+
+
+   
+            }
+//end method
+
+
+public function DeletePage($id)
+{
+
+   // return "working";
+    $user = User::find($id);
+    $user->delete();
+    return response()->json([
+
+        'message'=>'User Delete Succesfully',
+        'data'=>$user,
+
+    ]);
+}// end method
 
 
 }

@@ -38,6 +38,6 @@ class UserController extends Controller
         $users = json_decode($user, true);
         return response()->json($users);
 
-    }
+    }//end method
 
 }

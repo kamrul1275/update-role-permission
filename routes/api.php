@@ -67,6 +67,7 @@ Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
 
 Route::resource('products',ProductController::class);
 
+Route::get('/products/edit/{id}',[ProductController::class,'editProduct']);
 
  Route::resource('roles',RoleController::class);
 
@@ -79,4 +80,8 @@ Route::get('/',[PageController::class, 'indexPage']);
 
 // user Manage part
 
-Route::get('/users',[UserMangeUserController::class, 'indexPage']);
+Route::get('/user/info',[UserMangeUserController::class, 'indexPage']);
+Route::post('/user/create',[UserMangeUserController::class, 'createPage']);  
+Route::get('/user/edit/{id}',[UserMangeUserController::class, 'editPage']);
+Route::put('/user/update/{id}',[UserMangeUserController::class, 'updatePage']); 
+Route::delete('/user/delete/{id}',[UserMangeUserController::class, 'DeletePage']); 
