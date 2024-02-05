@@ -28,6 +28,27 @@ class RoleController extends Controller
     }//end method
 
 
+
+
+
+
+
+    public function getTotalRoles() {
+        $totalRoles = Role::count();
+    
+        // Now you can use $totalUsers in your code as needed
+       // return view('your_view')->with('totalUsers', $totalUsers);
+        return response()->json([
+    
+            'message'=>'AllRoles',
+            'data'=>$totalRoles,
+    
+        ]);
+    }
+    
+
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -83,5 +104,5 @@ class RoleController extends Controller
         $role->delete();
         $msg="Role Delete succesfully";
         return response()->json(['success'=>$msg],200);
-    }
+    }//end method
 }

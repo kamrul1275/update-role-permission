@@ -151,4 +151,30 @@ public function DeletePage($id)
 }// end method
 
 
+
+
+
+
+
+public function getTotalUsers() {
+    $totalUsers = User::count();
+
+    // Now you can use $totalUsers in your code as needed
+   // return view('your_view')->with('totalUsers', $totalUsers);
+    return response()->json([
+
+        'message'=>'All User',
+        'data'=>$totalUsers,
+
+    ]);
+}
+
+
+
+
+
+
+
+
+
 }

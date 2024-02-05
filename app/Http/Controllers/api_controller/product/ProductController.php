@@ -31,10 +31,29 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
 
+// total product count
+
+    public function getTotalProducts() {
+
+       // return "oky";
+        $totalProducts = Product::count();
+    
+        // Now you can use $totalUsers in your code as needed
+       // return view('your_view')->with('totalUsers', $totalUsers);
+        return response()->json([
+    
+            'message'=>'All Product',
+            'data'=>$totalProducts,
+    
+        ]);
+    }
+    
+    
+
+
+
+  
 
     public function create()
     {

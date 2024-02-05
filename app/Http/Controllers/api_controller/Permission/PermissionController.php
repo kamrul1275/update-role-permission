@@ -25,6 +25,25 @@ class PermissionController extends Controller
 
 
 
+
+    public function getTotalPermissions() {
+        $totalPermissions = Permission::count();
+    
+        // Now you can use $totalUsers in your code as needed
+       // return view('your_view')->with('totalUsers', $totalUsers);
+        return response()->json([
+    
+            'message'=>'All Permission',
+            'data'=>$totalPermissions,
+    
+        ]);
+    }
+    
+    
+
+
+
+
     public function store(PermissionRequest $request)
     {   
         $permission = new Permission();
