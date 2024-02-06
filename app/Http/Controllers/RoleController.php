@@ -16,30 +16,13 @@ class RoleController extends Controller
     {
         $roles = Role::latest()->get();
 
-        //return  $roles;
-
-        // if (! Gate::allows('view', $roles)) {
-        //     abort(403);
-        // }
-
-        //return "hello";
-
         return view('backend.role.index', compact('roles'));
     }
 
-    // Gate::authorize('view','roles');
-    // $roles = Role::latest()->get();
-
-    //return $roles;
-
-
     //end method
-
 
     function Create()
     {
-
-
         $permissions = Permission::latest()->get();
         return view('backend.role.create', compact('permissions'));
     } //end method

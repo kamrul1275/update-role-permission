@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
+use App\Models\Permission;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -60,14 +62,54 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RoleRequest $request)
-    {   
-        $role = new Role();
-        $role->name= $request->name;
-        $role->save();
-        $msg="Role add succesfully";
-        return response()->json(['success'=>$msg],201);
-    }
+   
+
+     public function store(Request $request)
+     {
+         // Start a database transaction
+         DB::beginTransaction();
+     
+         try {
+             // Create the role
+             $role = Role::create([
+                 'name' => $request->name,
+             ]);
+     
+             // Get and sanitize the permissions from the request
+             $permissions = json_decode($request->input('permissions', '[]'), true);
+     
+             // Attach each selected permission to the role
+             foreach ($permissions as $permissionId) {
+                 $permission = Permission::find($permissionId);
+                 if ($permission) {
+                     $role->permissions()->attach($permission);
+                 }
+             }
+     
+             // Commit the transaction
+             DB::commit();
+     
+             return response()->json([
+                 'message' => 'Role and permissions created successfully',
+                 'data' => $role,
+             ]);
+         } catch (\Exception $e) {
+             // Rollback the transaction in case of an error
+             DB::rollback();
+     
+             return response()->json([
+                 'message' => 'Error creating role and permissions',
+                 'error' => $e->getMessage(),
+             ], 500);
+         }
+     }
+     
+
+
+
+
+
+
 
     /**
      * Display the specified resource.

@@ -32,12 +32,13 @@ class UserController extends Controller
     {
 
 
-// return "working";
+//return "working";
 
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'role_id' => ['required'],
             'password' => ['required'],
            
         ]);
@@ -46,12 +47,14 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
+          
            
         ]);
 
-    
-//dd($user);
+    //return $user;
+
 
 
         return response()->json([

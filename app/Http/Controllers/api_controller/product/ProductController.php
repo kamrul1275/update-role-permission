@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(5);
+        $products = Product::get();
         //$product_images = Product_Image::all();
 
         return response()->json([
@@ -82,22 +82,25 @@ class ProductController extends Controller
             ]);
 
 
-                $name_gen = hexdec(uniqid()) . '.' . $request->file('image')->getClientOriginalExtension();
-                $request->file('image')->move(public_path('upload/product/'), $name_gen);
-                $save_url = 'upload/product/' . $name_gen;
+
+            // code oky...
+                // $name_gen = hexdec(uniqid()) . '.' . $request->file('image')->getClientOriginalExtension();
+                // $request->file('image')->move(public_path('upload/product/'), $name_gen);
+                // $save_url = 'upload/product/' . $name_gen;
 
 
-                 Product_Image::create([
-                    'product_id' => $product->id,
-                    'image' => $save_url,
-                ]);
-            // }
+                //  Product_Image::create([
+                //     'product_id' => $product->id,
+                //     'image' => $save_url,
+                // ]);
+
+          
 
 
 
             DB::commit();
 
-            $msg = "Product and images added successfully";
+            $msg = "Product and added successfully";
             return response()->json(['success' => $msg], 201);
         } catch (\Exception $e) {
             DB::rollBack();
