@@ -74,10 +74,13 @@ class RoleController extends Controller
              $role = Role::create([
                  'name' => $request->name,
              ]);
-     
+             
+             $permissions = $request->input('selectedPermissionsValues');
+            //  return $permissions;
+
              // Get and sanitize the permissions from the request
-             $permissions = json_decode($request->input('permissions', '[]'), true);
-     
+            //  $permissions = json_decode($request->input('selectedPermissionsValues', '[]'), true);
+            //  return $permissions;
              // Attach each selected permission to the role
              foreach ($permissions as $permissionId) {
                  $permission = Permission::find($permissionId);
@@ -92,6 +95,7 @@ class RoleController extends Controller
              return response()->json([
                  'message' => 'Role and permissions created successfully',
                  'data' => $role,
+                 
              ]);
          } catch (\Exception $e) {
              // Rollback the transaction in case of an error
