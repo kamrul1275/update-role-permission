@@ -13,25 +13,25 @@ class UserProfileController extends Controller
  function UserProfile(Request $request, User $user){
 
    
-//eturn "oky";
+//return "oky";
 
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
         'phone' => 'nullable|string|max:20',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust file type and size as needed
+        // 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust file type and size as needed
     ]);
 
     $user->name = $request->name;
     $user->email = $request->email;
     $user->phone = $request->phone;
 
-    if ($request->hasFile('photo')) {
-        $image = $request->file('photo');
-        $imageName = time().'.'.$image->extension();
-        $image->move(public_path('images'), $imageName);
-        $user->photo = $imageName;
-    }
+    // if ($request->hasFile('photo')) {
+    //     $image = $request->file('photo');
+    //     $imageName = time().'.'.$image->extension();
+    //     $image->move(public_path('upload/user'), $imageName);
+    //     $user->photo = $imageName;
+    // }
 
     $user->save();
 

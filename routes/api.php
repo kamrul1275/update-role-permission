@@ -7,6 +7,7 @@ use App\Http\Controllers\api_controller\Permission\PermissionController;
 use App\Http\Controllers\api_controller\product\ProductController;
 use App\Http\Controllers\api_controller\Role\RoleController;
 use App\Http\Controllers\api_controller\User\UserController;
+use App\Http\Controllers\api_controller\UserMange\ForgotPasswordController;
 use App\Http\Controllers\api_controller\UserMange\UserController as UserMangeUserController;
 use App\Http\Controllers\api_controller\UserMange\UserProfileController;
 use Illuminate\Http\Request;
@@ -44,6 +45,25 @@ Route::controller(AuthControlller::class)->group(function () {
 
     Route::get('/user', [AuthControlller::class, 'index']);
 
+    Route::post('/change/password', [AuthControlller::class, 'userChangePassword']);
+
+
+
+
+
+// reset password
+
+
+
+
+//Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+
+
+
+
+
     Route::resource('role_permissions',AdminController::class);
 
 
@@ -64,14 +84,19 @@ Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
  Route::put('/profile/update/{user}', [UserProfileController::class,'UserProfile'])->name('profile.update');
 
 
- Route::get('/profile/reset-password', [UserProfileController::class,'resetPassword'])->name('reset.Password');
+//  Route::get('/profile/reset-password', [UserProfileController::class,'resetPassword'])->name('reset.Password');
 
 
 
- Route::put('/change/password', [UserProfileController::class,'changePassword'])->name('api.password.change');
+//  Route::put('/get/password', [UserProfileController::class,'changePassword'])->name('api.password.change');
 
  });
 
+
+
+//  reset passwor
+
+Route::post('/forget/password', [ForgotPasswordController::class, 'ForgetPaswordSend']);
 
 
  // product part..

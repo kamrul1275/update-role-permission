@@ -98,4 +98,28 @@ class AuthControlller extends Controller
         ]);
     } //end method
 
+    public function userChangePassword(Request $request){
+
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+    
+        // Check if the provided old password matches the current password
+        if (!Hash::check($request->old_password, auth()->user()->password)){
+            return response()->json(['error' => 'The provided current password is incorrect.'], 422);
+        }
+    
+        // Retrieve the authenticated user
+        $user = auth()->user();
+    
+        // Update the user's password
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+    
+        return response()->json(['message' => 'Password changed successfully.'], 200);
+    }
+    
+
 }
