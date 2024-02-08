@@ -8,6 +8,7 @@ use App\Http\Controllers\api_controller\product\ProductController;
 use App\Http\Controllers\api_controller\Role\RoleController;
 use App\Http\Controllers\api_controller\User\UserController;
 use App\Http\Controllers\api_controller\UserMange\UserController as UserMangeUserController;
+use App\Http\Controllers\api_controller\UserMange\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,11 +53,24 @@ Route::controller(AuthControlller::class)->group(function () {
 Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
 
 
- });
+ //});
+
 
  Route::post('/users/{id}/roles/{roleId}', [UserController::class, 'addRole']);
 
- //});
+
+//  User Profile Update & change , reset password.
+
+ Route::put('/profile/update/{user}', [UserProfileController::class,'UserProfile'])->name('profile.update');
+
+
+ Route::get('/profile/reset-password', [UserProfileController::class,'resetPassword'])->name('reset.Password');
+
+
+
+ Route::put('/change/password', [UserProfileController::class,'changePassword'])->name('api.password.change');
+
+ });
 
 
 
