@@ -53,9 +53,6 @@ Route::controller(AuthControlller::class)->group(function () {
 
 // reset password
 
-
-
-
 //Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
@@ -71,6 +68,7 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 // user 
 
 Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
+// Route::put('/user/update/{id}', [UserController::class,'userUpdate'])->name('user.Update');
 
 
  //});
@@ -86,10 +84,6 @@ Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
 
 //  Route::get('/profile/reset-password', [UserProfileController::class,'resetPassword'])->name('reset.Password');
 
-
-
-//  Route::put('/get/password', [UserProfileController::class,'changePassword'])->name('api.password.change');
-
  });
 
 
@@ -98,8 +92,9 @@ Route::get('/user/role/access', [UserController::class, 'userRoleAccess']);
 
 Route::post('/forget/password', [ForgotPasswordController::class, 'ForgetPaswordSend']);
 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
- // product part..
   // product part..
 
 Route::resource('products',ProductController::class);

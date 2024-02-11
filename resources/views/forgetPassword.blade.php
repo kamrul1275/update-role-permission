@@ -9,6 +9,7 @@
     <style type="text/css">
         a:hover {text-decoration: underline !important;}
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
@@ -19,17 +20,8 @@
             <td>
                 <table style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="100%" border="0"
                     align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                          <a href="https://rakeshmandal.com" title="logo" target="_blank">
-                            <img width="60" src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png" title="logo" alt="logo">
-                          </a>
-                        </td>
-                    </tr>
-                    <tr>
+                
+               
                         <td style="height:20px;">&nbsp;</td>
                     </tr>
                     <tr>
@@ -39,7 +31,7 @@
                                 <tr>
                                     <td style="height:40px;">&nbsp;</td>
                                 </tr>
-                                <tr>
+                               
                                     <td style="padding:0 35px;">
                                         <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">You have
                                             requested to reset your password</h1>
@@ -50,9 +42,71 @@
                                             password has been generated for you. To reset your password, click the
                                             following link and follow the instructions.
                                         </p>
-                                        <a href="javascript:void(0);"
-                                            style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
-                                            Password</a>
+                                        {{-- <button>{{$otp}}</button> --}}
+                                        {{-- <a href="javascript:void(0);"
+                                            style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
+                                            {{$otp}}</a> --}}
+
+
+
+<div class="container">
+
+ <div class="row">
+
+    <form action="{{ route('reset.password.post') }}" method="POST">
+        @csrf
+        <input type="hidden" name="token" value="{{ $token }}">
+
+        <div class="form-group row">
+            <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+            <div class="col-md-6">
+                <input type="text" id="email_address" class="form-control" name="email" required autofocus>
+                {{-- @if ($errors->has('email'))
+                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                @endif --}}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+            <div class="col-md-6">
+                <input type="password" id="password" class="form-control" name="password" required autofocus>
+                {{-- @if ($errors->has('password'))
+                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                @endif --}}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+            <div class="col-md-6">
+                <input type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>
+                {{-- @if ($errors->has('password_confirmation'))
+                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                @endif --}}
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-md-4">
+            <button type="submit" class="btn btn-primary">
+                Reset Password
+            </button>
+        </div>
+    </form>
+
+
+ </div>
+
+</div>
+
+
+                                          
+
+
+
+
+
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -65,7 +119,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                            <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>www.rakeshmandal.com</strong></p>
+                            <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>www.orangebd.com</strong></p>
                         </td>
                     </tr>
                     <tr>

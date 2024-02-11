@@ -85,58 +85,36 @@ public function editPage($id)
 
 
 
-public function updatePage(Request $request,$id)
+public function updatePage(Request $request, $id)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+        'password' => ['required'],
+    ]);
 
-    {
+    $user = User::find($id);
 
-
- //return "working";
-
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required'],
-           
+    if ($user) {
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
-        $user = User::find($id);
-
-        if( $user){
-
-            $user->updated([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-               
-            ]);
-    
-        
-    //dd($user);
-    //$users = User::find($id);
-    
-
-            return response()->json([
-                'status'=>200,
-                'message'=>'User Update Succesfully',
-                'data'=>$user,
-                //'dataImage'=>$product_images,
-            ],200);
-
-        }else{
-
-            return response()->json([
-                'status'=>404,
-                'message'=>'no found user',
-                'data'=>$user,
-                //'dataImage'=>$product_images,
-            ]);
-        }
-
-
-   
-            }
-//end method
+        return response()->json([
+            'status' => 200,
+            'message' => 'User updated successfully',
+            'data' => $user,
+        ], 200);
+    } else {
+        return response()->json([
+            'status' => 404,
+            'message' => 'User not found',
+            'data' => null,
+        ]);
+    }
+}//end method
 
 
 public function DeletePage($id)
